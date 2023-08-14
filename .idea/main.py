@@ -15,3 +15,8 @@ for vacancy in all_vacancies:
 # получаем среднюю зарплату по вакансиям
 avg_salary = db_manager.get_avg_salary()
 print(avg_salary)
+
+# получаем список всех вакансий, у которых зарплата выше средней по всем вакансиям
+higher_salary_vacancies = db_manager.get_vacancies_with_higher_salary()
+for vacancy in higher_salary_vacancies:
+    print(vacancy[0], vacancy[1], vacancy[2], vacancy[3], vacancy[4])
