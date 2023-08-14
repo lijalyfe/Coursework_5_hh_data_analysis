@@ -36,3 +36,11 @@ class DBManager:
         )
         return self.cursor.fetchall()
 
+    def get_vacancies_with_keyword(self, keyword):
+        """получает список всех вакансий, в названии которых содержатся переданные в метод слова, например python"""
+        self.cursor.execute(
+            "SELECT companies.name, vacancies.name, vacancies.salary_min, vacancies.salary_max, vacancies.url FROM vacancies LEFT JOIN companies ON vacancies.employer_id=companies.id WHERE vacancies.name ILIKE %s",
+            (f"%{keyword}%",)
+        )
+        return self.cursor.fetchall()
+
