@@ -39,3 +39,16 @@ for company in companies_data:
     response = requests.get(company_vacancies_url)
     company_vacancies_data = response.json()['items']
     vacancies_data.extend(company_vacancies_data)
+
+# Заполнение таблиц данными
+for company in companies_data:
+    cursor.execute("INSERT INTO companies (name, url) VALUES (%s, %s)", (company["name"], company["url"]))
+
+for vacancy in vacancies_data:
+    employer_id = vacancy["employer"]["id"]
+    cursor.execute(
+        "INSERT INTO vacancies (name, salary_min, salary_max, employer_id) VALUES (%s, %s, %s, %s)",
+        (vacancy["name"], vacancy["salary"]["from"], vacancy["salary"]["to"], employer_id)
+    )
+
+conn.commit()
