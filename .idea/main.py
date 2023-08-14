@@ -20,3 +20,8 @@ print(avg_salary)
 higher_salary_vacancies = db_manager.get_vacancies_with_higher_salary()
 for vacancy in higher_salary_vacancies:
     print(vacancy[0], vacancy[1], vacancy[2], vacancy[3], vacancy[4])
+
+# получаем список всех вакансий, в названии которых содержатся переданные в метод слова
+python_vacancies = db_manager.get_vacancies_with_keyword('python')
+for vacancy in python_vacancies:
+    print(vacancy[0], vacancy[1], vacancy[2], vacancy[3], vacancy[4])
