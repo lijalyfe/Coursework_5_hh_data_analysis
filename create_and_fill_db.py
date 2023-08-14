@@ -25,3 +25,17 @@ CREATE TABLE vacancies (
 );
 """)
 conn.commit()
+
+# Получение данных с API
+companies_url = 'https://api.hh.ru/employers'
+response = requests.get(companies_url)
+companies_data = response.json()
+
+vacancies_url = 'https://api.hh.ru/vacancies'
+vacancies_data = []
+
+for company in companies_data:
+    company_vacancies_url = f'{vacancies_url}/?employer_id={company["id"]}'
+    response = requests.get(company_vacancies_url)
+    company_vacancies_data = response.json()['items']
+    vacancies_data.extend(company_vacancies_data)
