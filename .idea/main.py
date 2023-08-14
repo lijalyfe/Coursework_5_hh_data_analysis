@@ -11,3 +11,7 @@ for company in companies_and_vacancies_count:
 all_vacancies = db_manager.get_all_vacancies()
 for vacancy in all_vacancies:
     print(vacancy[0], vacancy[1], vacancy[2], vacancy[3], vacancy[4])
+
+# получаем среднюю зарплату по вакансиям
+avg_salary = db_manager.get_avg_salary()
+print(avg_salary)
