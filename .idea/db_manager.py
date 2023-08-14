@@ -13,3 +13,12 @@ class DBManager:
             "SELECT companies.name, COUNT(vacancies.id) AS vacancies_count FROM companies LEFT JOIN vacancies ON companies.id=vacancies.employer_id GROUP BY companies.id ORDER BY vacancies_count DESC"
         )
         return self.cursor.fetchall()
+
+    def get_all_vacancies(self):
+        """получает список всех вакансий с указанием названия компании, названия вакансии и зарплаты и ссылки на вакансию"""
+        self.cursor.execute(
+            "SELECT companies.name, vacancies.name, vacancies.salary_min, vacancies.salary_max, vacancies.url FROM vacancies LEFT JOIN companies ON vacancies.employer_id=companies.id"
+        )
+        return self.cursor.fetchall()
+
+
