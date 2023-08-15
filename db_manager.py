@@ -31,16 +31,20 @@ class DBManager:
     def get_vacancies_with_higher_salary(self):
         """получает список всех вакансий, у которых зарплата выше средней по всем вакансиям"""
         avg_salary = self.get_avg_salary()
-        query = """
-        SELECT vacancies.id, vacancies.name, vacancies.salary_min, vacancies.salary_max
-        FROM vacancies
-        WHERE ((vacancies.salary_min + vacancies.salary_max)/2) > %(avg_salary)s
-        """
-        self.cursor.execute(query, {'avg_salary': avg_salary})
-        return self.cursor.fetchall()
+        if avg_salary is not None:
+            query = """
+            SELECT vacancies.id, vacancies.name, vacancies.salary_min, vacancies.salary_max
+            FROM vacancies
+            WHERE ((vacancies.salary_min + vacancies.salary_max)/2) > %(avg_salary)s
+            """
+            self.cursor.execute(query, {'avg_salary': avg_salary})
+            return self.cursor.fetchall()
+        else:
+            return []
 
     def get_vacancies_with_keyword(self, keyword):
-        """получает список всех вакансий, в названии которых содержатся переданные в метод слова, например python"""
+
+        """получает список всех вакансий, в названии которых содержатся переданные в метод слова"""
         self.cursor.execute(
             "SELECT companies.name, vacancies.name, vacancies.salary_min, vacancies.salary_max, vacancies.url FROM vacancies LEFT JOIN companies ON vacancies.employer_id=companies.id WHERE vacancies.name ILIKE %s",
             (f"%{keyword}%",)
