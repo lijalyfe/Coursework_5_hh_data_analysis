@@ -12,7 +12,7 @@ for company in companies_and_vacancies_count:
 all_vacancies = db_manager.get_all_vacancies()
 print("Cписок всех вакансий: ")
 for vacancy in all_vacancies:
-    print(vacancy[0], vacancy[1], vacancy[2], vacancy[3], vacancy[4])
+    print(*vacancy)
 
 # получаем среднюю зарплату по вакансиям
 avg_salary = db_manager.get_avg_salary()
@@ -20,12 +20,18 @@ print("Cредняя зарплата по вакансиям: ", avg_salary)
 
 # получаем список всех вакансий, у которых зарплата выше средней по всем вакансиям
 higher_salary_vacancies = db_manager.get_vacancies_with_higher_salary()
-print("Cписок всех вакансий, у которых зарплата выше средней по всем вакансиям: ")
-for vacancy in higher_salary_vacancies:
-    print(vacancy[0], vacancy[1], vacancy[2], vacancy[3], vacancy[4])
+if higher_salary_vacancies:
+    print("Cписок всех вакансий, у которых зарплата выше средней по всем вакансиям: ")
+    for vacancy in higher_salary_vacancies:
+        print(*vacancy)
+else:
+    print("Нет вакансий с указанной информацией о зарплате.")
+
+# запрашиваем ключевое слово от пользователя
+user_keyword = input("Введите ключевое слово для поиска вакансий: ")
 
 # получаем список всех вакансий, в названии которых содержатся переданные в метод слова
-python_vacancies = db_manager.get_vacancies_with_keyword('python')
+keyword_vacancies = db_manager.get_vacancies_with_keyword(user_keyword)
 print("Cписок всех вакансий, в названии которых содержатся переданные в метод слова:")
-for vacancy in python_vacancies:
-    print(vacancy[0], vacancy[1], vacancy[2], vacancy[3], vacancy[4])
+for vacancy in keyword_vacancies:
+    print(*vacancy)
